@@ -10,6 +10,8 @@ public class PlayerHealth : MonoBehaviour
     private float invulnTime;
     [SerializeField] private float invulnLimit;
 
+    private bool isDead;
+
     [SerializeField] private TextMeshProUGUI healthText;
 
     private SpriteRenderer sr;
@@ -45,22 +47,26 @@ public class PlayerHealth : MonoBehaviour
         {
             health = 0;
             healthText.text = "HP: " + health.ToString();
-            Cursor.visible = true;
-            Destroy(gameObject);
-            Time.timeScale = 0f;
+            Death();
         }
         else if (collision.gameObject.CompareTag("EnemyBullet"))
         {
             health--;
             healthText.text = "HP: " + health.ToString();
             invulnTime = invulnLimit;
-            if (health > 0)
+
+            if (health <= 0)
             {
-                return;
+                Death();
             }
-            Cursor.visible = true;
-            Destroy(gameObject);
-            Time.timeScale = 0f;
         }
+    }
+
+    private void Death()
+    {
+        Cursor.visible = true;
+        Destroy(gameObject);
+        Time.timeScale = 0f;
+        RestartGame.Instance.gameOver = true;
     }
 }
