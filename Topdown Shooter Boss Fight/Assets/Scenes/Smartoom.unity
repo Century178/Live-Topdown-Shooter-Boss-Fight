@@ -271,6 +271,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   health: 3
+  invulnLimit: 2
   healthText: {fileID: 1558396416}
 --- !u!114 &75034865
 MonoBehaviour:
