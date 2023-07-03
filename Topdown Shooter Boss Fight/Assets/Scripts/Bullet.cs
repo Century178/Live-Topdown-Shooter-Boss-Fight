@@ -24,9 +24,16 @@ public class Bullet : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.CompareTag("Enemy"))
+        BossHealth bossHealth = collision.gameObject.GetComponent<BossHealth>();
+        PlayerHealth playerHealth = collision.gameObject.GetComponent<PlayerHealth>();
+        if (bossHealth != null)
         {
-            Debug.Log(collision);
+            bossHealth.TakeDamage(1);//1 should work
+        }
+        else if (playerHealth != null)
+        {
+            Debug.Log("ouch");
+            //playerHealth take damage
         }
 
         Destroy(gameObject);

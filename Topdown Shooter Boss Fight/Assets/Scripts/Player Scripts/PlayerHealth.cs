@@ -19,8 +19,14 @@ public class PlayerHealth : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            Destroy(collision.gameObject);
-            health--;
+            health=0;
+            healthText.text = "HP: " + health.ToString();
+            Cursor.visible = true;
+            Destroy(gameObject);
+            Time.timeScale = 0f;
+        }else if (collision.gameObject.CompareTag("EnemyBullet"))
+        {
+            health --;
             healthText.text = "HP: " + health.ToString();
             if (health > 0)
             {
