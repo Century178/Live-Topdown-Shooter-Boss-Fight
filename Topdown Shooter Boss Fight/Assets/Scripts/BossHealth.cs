@@ -12,11 +12,13 @@ public class BossHealth : MonoBehaviour
 
     [SerializeField] private Slider healthSlider;
     [SerializeField] private BossAI bossAI;
+
     private void Awake()
     {
         healthSlider.maxValue = maxHealth;
         health = maxHealth;
     }
+
     private void Update()
     {
         if (health <= 0 && !stage2)
@@ -33,8 +35,11 @@ public class BossHealth : MonoBehaviour
         healthSlider.value = health;
     }
 
-    public void TakeDamage(int damage)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
-        health -= damage;
+        if (collision.gameObject.CompareTag("Bullet"))
+        {
+            health--;
+        }
     }
 }

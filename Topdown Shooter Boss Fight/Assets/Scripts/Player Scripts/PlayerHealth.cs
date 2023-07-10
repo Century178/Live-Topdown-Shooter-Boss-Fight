@@ -45,20 +45,11 @@ public class PlayerHealth : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy"))
         {
-            health = 0;
-            healthText.text = "HP: " + health.ToString();
-            Death();
-        }
-        else if (collision.gameObject.CompareTag("EnemyBullet"))
-        {
             health--;
             healthText.text = "HP: " + health.ToString();
             invulnTime = invulnLimit;
 
-            if (health <= 0)
-            {
-                Death();
-            }
+            if (health <= 0) Death();
         }
     }
 

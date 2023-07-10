@@ -4,10 +4,11 @@ using UnityEngine;
 
 public class PlayerShoot : MonoBehaviour
 {
-    [SerializeField] private Transform crosshair;
-    [SerializeField] private Bullet bullet;
-    [SerializeField] private Transform firePoint;
+    [SerializeField] private Transform crosshair, firePoint;
+
     [SerializeField] private Camera mainCamera;
+    [SerializeField] private Bullet bullet;
+
     [SerializeField] private float offset = 90;
     [SerializeField] private float shootRate = 0.25f;
     private float timeSinceLastShot = 0;
@@ -32,7 +33,7 @@ public class PlayerShoot : MonoBehaviour
         {
             timeSinceLastShot = 0;
             Instantiate(bullet, firePoint.position, transform.localRotation);
-            Physics2D.IgnoreLayerCollision(3, 3);
+            Physics2D.IgnoreLayerCollision(3, 8);
         }
     }
 }

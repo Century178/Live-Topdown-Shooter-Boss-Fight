@@ -285,11 +285,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   crosshair: {fileID: 775912125535783554}
-  bullet: {fileID: 2571841371164567290, guid: 4fc59285aa9db7c4ca86e6521b185504, type: 3}
   firePoint: {fileID: 775912125561490576}
   mainCamera: {fileID: 0}
+  bullet: {fileID: 2571841371164567290, guid: 4fc59285aa9db7c4ca86e6521b185504, type: 3}
   offset: 90
   shootRate: 0.25
+  pLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  bLayer:
+    serializedVersion: 2
+    m_Bits: 256
 --- !u!114 &775912127038717151
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -8,14 +8,12 @@ public class PlayerMovement : MonoBehaviour
     private float x, y;
     private Rigidbody2D rb;
 
-    public static PlayerMovement player;
+    public static PlayerMovement Player { get; private set; }
 
     private void Awake()
     {
-        if (player == null)
-        {
-            player = this;
-        }
+        if (Player != null) Destroy(gameObject);
+        else Player = this;
 
         rb = GetComponent<Rigidbody2D>();
     }

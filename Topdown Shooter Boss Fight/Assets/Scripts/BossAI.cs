@@ -4,9 +4,11 @@ using UnityEngine;
 
 public class BossAI : MonoBehaviour
 {
+    [Header("Speed")]
     [SerializeField] private float speed;
     [SerializeField] private float chargeSpeed;
 
+    [Header("Attack Amounts")]
     [SerializeField] private float projectilesToShoot;
     private float projectilesShot;
     [SerializeField] private float bombsToShoot;
@@ -14,22 +16,25 @@ public class BossAI : MonoBehaviour
     [SerializeField] private float timesToCharge;
     private float timesCharged;
 
+    [Header("Attack Frequencies")]
     [SerializeField] private float safeShootingRange;
     [SerializeField] private float projectileShootingInterval;
     [SerializeField] private float bombShootingInterval;
     [SerializeField] private float ChargingInterval;
     private float timer;
 
+    [Header("Repositioning")]
     [SerializeField] private Vector2 repositioningBox;
     [SerializeField] private LayerMask wallLayer;
     private Vector3 targetPosition;
 
+    [Header("Charging")]
     public bool chargeActive;
-
     private Color normalColor;
     [SerializeField] private Color ChargingColor;
     [SerializeField] private float colorLerp;
 
+    [Header("Components")]
     [SerializeField] private GameObject projectilePrefab;
     [SerializeField] private GameObject bombPrefab;
     [SerializeField] private Transform warningTriangle;
@@ -37,18 +42,18 @@ public class BossAI : MonoBehaviour
     [SerializeField] private SpriteRenderer spriteRenderer;
     private Transform player;
 
-    public enum BossState
+    private enum BossState
     {
         Shooting,
         ShootingBombs,
         Repositioning,
         Charging
     }
-    public BossState bossState;
+    private BossState bossState;
 
     private void Awake()
     {
-        player = GameObject.FindObjectOfType<PlayerMovement>().transform;
+        player = PlayerMovement.Player.transform;
         normalColor = spriteRenderer.color;
     }
 
@@ -76,9 +81,9 @@ public class BossAI : MonoBehaviour
                     Instantiate(projectilePrefab, shootingPoint.position, transform.localRotation);
                     timer = 0;
                 }
-                else
-                    timer += 1;
+                else timer += 1;
                 break;
+
             case BossState.ShootingBombs:
                 if (safeShootingRange > Vector2.Distance(transform.position, player.position) || bombsShot >= bombsToShoot)
                 {
@@ -93,9 +98,9 @@ public class BossAI : MonoBehaviour
                     Instantiate(bombPrefab, shootingPoint.position, transform.localRotation);
                     timer = 0;
                 }
-                else
-                    timer += 1;
+                else timer += 1;
                 break;
+
             case BossState.Repositioning:
                 transform.position = Vector2.MoveTowards(transform.position, targetPosition, speed);
                 FocusOn(targetPosition);
@@ -104,6 +109,7 @@ public class BossAI : MonoBehaviour
                     RandomState();
                 }
                 break;
+
             case BossState.Charging:
                 spriteRenderer.color = Color.Lerp(spriteRenderer.color, ChargingColor, colorLerp);
                 transform.position = Vector2.MoveTowards(transform.position, targetPosition, chargeSpeed);
@@ -118,14 +124,14 @@ public class BossAI : MonoBehaviour
                 if (timesCharged >= timesToCharge)
                 {
                     RandomState();
-                    warningTriangle.position = Vector2.one * 69;//send it away
+                    warningTriangle.position = Vector2.one * 69; //send it away
                     spriteRenderer.color = normalColor;
                     timesCharged = 0;
                     tag = "Untagged";
                 }
                 break;
-            default:
-                break;
+
+            default: break;
         }
     }
 
@@ -137,18 +143,16 @@ public class BossAI : MonoBehaviour
             case 0:
                 bossState = BossState.Shooting;
                 break;
+
             case 1:
                 bossState = BossState.ShootingBombs;
                 break;
+
             case 2:
                 Debug.Log("charge");
                 if (chargeActive)
                 {
                     Debug.Log("charge ready");
-                    /*Vector3 direction = (transform.up + (new Vector3(Random.Range(-1, 1), Random.Range(-1, 1))) * 0.2f).normalized;
-                    RaycastHit2D hit = Physics2D.Raycast(transform.position, direction, 50, wallLayer);
-                    targetPosition = hit.point;
-                    warningTriangle.position = hit.point;*/
                     tag = "Enemy";
                     RandomizeTargetPos();
                     warningTriangle.position = targetPosition;
@@ -156,13 +160,13 @@ public class BossAI : MonoBehaviour
                     FocusOn(targetPosition);
                 }
                 break;
-            default:
-                break;
+
+            default: break;
         }
     }
     private void OnDestroy()
     {
-        warningTriangle.position = Vector2.one * 69;//send it away
+        warningTriangle.position = Vector2.one * 69; //send it away
     }
 
     private void RandomizeTargetPos()
