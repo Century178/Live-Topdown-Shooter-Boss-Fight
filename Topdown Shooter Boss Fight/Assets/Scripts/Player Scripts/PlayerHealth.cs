@@ -10,8 +10,6 @@ public class PlayerHealth : MonoBehaviour
     private float invulnTime;
     [SerializeField] private float invulnLimit;
 
-    private bool isDead;
-
     [SerializeField] private TextMeshProUGUI healthText;
 
     private SpriteRenderer sr;

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossAI : MonoBehaviour
+public class BossAI : MonoBehaviour //Shout out to Smartoom, he made this script.
 {
     [Header("Speed")]
     [SerializeField] private float speed;
@@ -149,10 +149,8 @@ public class BossAI : MonoBehaviour
                 break;
 
             case 2:
-                Debug.Log("charge");
                 if (chargeActive)
                 {
-                    Debug.Log("charge ready");
                     tag = "Enemy";
                     RandomizeTargetPos();
                     warningTriangle.position = targetPosition;
@@ -166,7 +164,7 @@ public class BossAI : MonoBehaviour
     }
     private void OnDestroy()
     {
-        warningTriangle.position = Vector2.one * 69; //send it away
+        if (warningTriangle != null) warningTriangle.position = Vector2.one * 69; //send it away
     }
 
     private void RandomizeTargetPos()
